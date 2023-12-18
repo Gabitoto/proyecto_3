@@ -41,7 +41,32 @@ async def user(id: int):
 async def user(id: int):
     return search_user(id)
     
+@app.post("/user/")
+async def user(user: User):
+    if type(search_user(user.id)) == User:
+         return {"Error": "El usuario ya existe"}
+    else:
+        user_list.append(user)
+        return user
+
+@app.put ("/user/")
+async def user(user:User):
+
+    found = False
+
+    for index,saved_user in enumerate(user_list):
+        if saved_user.id == user.id:
+            user_list[index] = user
+            found = True
     
+    if not found:
+        return {"Error": "No se a actualizado el usuario"}
+    else:
+        return user 
+
+
+
+
 def search_user(id : int):
     users = filter(lambda user : user . id == id , user_list)
     try:
@@ -49,5 +74,7 @@ def search_user(id : int):
     except:
         return {"Error": "No se a encontrado el usuario"}
 
-#entonces dentro del GET tenemos estas dos formas de llamar a la informacion a traves del PATH o el QUERY.
+# Entonces dentro del GET tenemos estas dos formas de llamar a la informacion a traves del PATH o el QUERY.
+# Debemos ver las operaciones POST para agregar datos 
+# Y las PUT para actualizar datos
 
