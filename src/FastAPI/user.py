@@ -49,7 +49,7 @@ async def user(user: User):
         user_list.append(user)
         return user
 
-@app.put ("/user/")
+@app.put ("/user/") 
 async def user(user:User):
 
     found = False
@@ -65,7 +65,7 @@ async def user(user:User):
         return user 
 
 
-@app.delete("/user/{id}")
+@app.delete("/user/{id}") # DELETE para borrar datos
 async def user(id: int):
     found = False
     for index,saved_user in enumerate(user_list):
