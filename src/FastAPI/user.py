@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 #iniciar server: uvicorn user:app --reload
@@ -41,10 +41,10 @@ async def user(id: int):
 async def user(id: int):
     return search_user(id)
     
-@app.post("/user/")
+@app.post("/user/", status_code= 201)
 async def user(user: User):
     if type(search_user(user.id)) == User:
-         return {"Error": "El usuario ya existe"}
+         raise HTTPException (status_code= 204, detail= "El usuario ya existe")
     else:
         user_list.append(user)
         return user
